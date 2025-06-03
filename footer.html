@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Footer with Contact and Logos</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    footer {
+      background-color: #000000;
+      color: #ffffff;
+      padding: 3rem 2rem;
+    }
+
+    .footer-main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 0.5rem;
+    }
+
+    .footer-brand {
+      flex: 1 1 250px;
+      margin-top: 40px;
+    }
+
+    .logo-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand img {
+      height: 40px;
+      object-fit: contain;
+      margin-top: 0;
+    }
+
+    .footer-brand p {
+      margin: 0.5rem 0;
+    }
+
+    .social-icons {
+      margin-top: 10px;
+    }
+
+    .social-icons a {
+      margin-right: 15px;
+      color: #ffffff;
+      font-size: 2rem;
+      transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #dddddd;
+    }
+
+    .footer-section {
+      flex: 1 1 220px;
+      padding-left: 10px;
+    }
+
+    .footer-section h4 {
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      text-align: left;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-section ul a {
+      text-decoration: none;
+      color: #ffffff;
+      transition: color 0.3s;
+    }
+
+    .footer-section ul a:hover {
+      color: #dddddd;
+    }
+
+    .footer-section p {
+      color: #ffffff;
+      margin: 0.5rem 0;
+    }
+
+    .copy-icon {
+      margin-left: 8px;
+      cursor: pointer;
+      color: #ffffff;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+
+    .copy-icon:hover {
+      color: #dddddd;
+    }
+
+    .inline-span {
+      display: inline-block;
+    }
+
+    .contact-section {
+      flex: 1 1 280px;
+    }
+
+    .address-section {
+      flex: 1 1 280px;
+      font-size: 0.92rem;
+      line-height: 1.4;
+      padding-left: 10px;
+      margin-left: 0;
+      max-width: none;
+    }
+
+    @media (max-width: 768px) {
+      .footer-main {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer-section,
+      .footer-brand {
+        text-align: center;
+      }
+
+      .footer-brand img {
+        margin: 0 10px;
+      }
+
+      .address-section {
+        margin-left: 0;
+        max-width: 100%;
+        text-align: center;
+      }
+
+      .address-section h4 {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Footer -->
+  <!-- Footer -->
+<footer>
+  <div class="footer-main">
+
+    <!-- Social Media Section -->
+    <div class="footer-brand">
+      <p>Find us on social media</p>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/nssnsutcell/?hl=en" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://x.com/nssnsutcell?lang=en" target="_blank"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://in.linkedin.com/company/nss-nsut-delhi" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.youtube.com/channel/UCZRtEXP1DKBS4RHyxkXlRuQ" target="_blank"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-section quick-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#nsut">NSUT</a></li>
+        <li><a href="#nss">NSS</a></li>
+        <li><a href="#goi">Government of India</a></li>
+        <li><a href="#moyas">Ministry of Youth Affairs and Sports</a></li>
+      </ul>
+    </div>
+
+    <!-- Merged Contact and Address -->
+    <div class="footer-section contact-section">
+      <h4>Contact</h4>
+      <ul>
+        <li>
+           <span class="inline-span">nsscoordinator.nsut@gmail.com</span>
+        </li>
+        <li>
+          Location: NSS Office, Student Activity Centre, NSUT, Azad Hind Fauj Marg, Dwarka Sector-3, Delhi-110078
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</footer>
