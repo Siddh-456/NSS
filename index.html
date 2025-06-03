@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="test_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+     
+        .team-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-section {
+            margin-bottom: 60px;
+            padding: 30px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 30px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: flex-end;
+            gap: 30px;
+            margin-top: auto;
+            padding-right: 100px;
+            margin-left: auto;
+        }
+
+        .footer-section.address-section {
+            margin-left: auto;
+            padding-left: 100px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #ff4500;
+        }
+
+        .copyable-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .copy-button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .copy-button i {
+            font-size: 14px;
+        }
+
+        .copy-button.success {
+            color: #4CAF50;
+        }
+
+        .team-card:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+
+        .team-image-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .team-image {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            object-position: 50% 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .team-card:hover .team-image {
+            transform: scale(1.1);
+        }
+
+        .team-info {
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .expanded-content {
+            display: none;
+            padding: 20px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-card:hover .expanded-content {
+            display: block;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .team-info h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .team-info p {
+            margin: 5px 0 0;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Team Modal Styles */
+        .team-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .modal-header p {
+            color: #666;
+            margin: 5px 0 0;
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 350px;
+            object-fit: cover;
+            margin: 20px 0;
+            border-radius: 8px;
+            object-position: 50% 60%;
+        }
+
+        .modal-text {
+            text-align: left;
+            color: #333;
+        }
+
+        .modal-text p {
+            margin: 15px 0;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .profile-summary {
+            margin-bottom: 2rem;
+        }
+
+        .profile-summary p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .key-responsibilities {
+            margin-bottom: 2rem;
+        }
+
+        .responsibilities-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .responsibilities-list li {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 1rem;
+        }
+
+        .responsibilities-list li:before {
+            content: "•";
+            color: #ff4500;
+            position: absolute;
+            left: 0;
+        }
+
+        .education {
+            margin-bottom: 2rem;
+        }
+
+        .education p {
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .experience {
+            margin-bottom: 2rem;
+        }
+
+        .companies-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .companies-list li {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .companies-list li:before {
+            content: "•";
+            color: #ff4500;
+            position: absolute;
+            left: 0;
+        }
+
+        .modal-text h3 {
+            color: #333;
+            margin: 2rem 0 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #ff4500;
+            padding-bottom: 0.5rem;
+        }
+
+        .modal-text ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .modal-text ul li {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .modal-text ul li:before {
+            content: "•";
+            color: #ff4500;
+            position: absolute;
+            left: 0;
+        }
+
+        .associations {
+            margin-bottom: 2rem;
+        }
+
+        .key-areas {
+            margin-bottom: 2rem;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .area-col {
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .company-col {
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .skills {
+            margin-bottom: 2rem;
+        }
+
+        .skills-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .skills-list li {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 1rem;
+        }
+
+        .skills-list li:before {
+            content: "•";
+            color: #ff4500;
+            position: absolute;
+            left: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0;
+            width: 100%;
+            background: transparent;
+            transition: transform 0.3s ease;
+        }
+
+        nav.hide {
+            transform: translateY(-100%);
+        }
+
+        .nav-container {
+            background-color: rgb(80 80 80 / 0%);
+            width: 80%;
+            max-width: 1200px;
+            border-radius: 15px;
+            padding: 14px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-right: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            transform: scale(1);
+            transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 0, 0.1);
+            border-radius: 8px;
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3),
+                        0 0 25px rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-links a.active {
+            color: #333;
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.2);
+        }
+
+        /* Responsive Navigation */
+        @media (max-width: 768px) {
+            .nav-links {
+                justify-content: space-around;
+                flex-wrap: wrap;
+                gap: 10px;
+                padding: 0 10px;
+            }
+
+            .nav-links a {
+                padding: 10px 15px;
+                min-width: 100px;
+                font-size: 1rem;
+                letter-spacing: 0.3px;
+                text-transform: uppercase;
+            }
+        }
+
+        /* Hero Section Typography */
+        .hero-content h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 4px 4px 15px rgba(0, 0, 0, 0.7);
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-content p {
+            font-size: 1.8rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        /* Section Headers */
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            color: #2c3e50;
+            position: relative;
+            padding-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #ff8c00);
+            border-radius: 2px;
+        }
+        
+        .section-title::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 1px;
+            background: rgba(44, 62, 80, 0.2);
+        }
+        
+        /* Card Titles */
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        /* Button Styling */
+        .btn {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 12px 30px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ffd700, #ff8c00);
+            color: #2c3e50;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .activity-content p {
+            margin: 10px 0;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+        
+        /* Terms and Conditions Styles */
+        .terms-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .terms-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .terms-card {
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+        
+        .card-header .arrow {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .card-content {
+            padding: 10px;
+        }
+        
+        .content-wrapper {
+            display: none;
+        }
+        
+        .terms-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .terms-list li {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 1rem;
+        }
+        
+        .terms-list li:before {
+            content: "•";
+            color: #ff4500;
+            position: absolute;
+            left: 0;
+        }
+        
+        .destination-card {
+            background-color: #f7f7f7;
+    
+            border-radius: 10px;
+        }
+        
+        .destination-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+        
+       
+        
+        .destination-content h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #f7f7f7;
+        }
+        
+        .destination-content p {
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #f6f1f1;
+        }
+        
+        .activity-card {
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .activity-content h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+        
+        .activity-content p {
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .card-summary {
+            display: block;
+        }
+        
+        .card-details {
+            display: none;
+        }
+        
+        .expanded .card-summary {
+            display: none;
+        }
+        
+        .expanded .card-details {
+            display: block;
+        }
+        
+        .expanded-content {
+            display: none;
+            padding: 20px;
+        }
+        
+        .expanded .expanded-content {
+            display: block;
+        }
+        
+        .destination-card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+        .destination-card-link:hover .destination-card, .destination-card-link:focus .destination-card {
+            box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+            transform: translateY(-2px) scale(1.02);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        
+        .destination-carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            overflow: hidden;
+        }
+        .destination-carousel {
+            display: flex;
+            transition: transform 0.4s cubic-bezier(.77,0,.18,1);
+            will-change: transform;
+        }
+        .destination-card-link {
+            flex: 0 0 33.3333%;
+            box-sizing: border-box;
+            padding: 0 12px;
+            max-width: 33.3333%;
+        }
+        .destination-card {
+            height: 100%;
+        }
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,69,0,0.8);
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 2;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-arrow:hover {
+            background: rgba(255,69,0,1);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        }
+        .carousel-arrow:disabled {
+            opacity: 0.3;
+            cursor: default;
+        }
+        .carousel-arrow.left { left: 8px; }
+        .carousel-arrow.right { right: 8px; }
+        @media (max-width: 900px) {
+            .destination-card-link, .destination-card-link { flex-basis: 50%; max-width: 50%; }
+        }
+        @media (max-width: 600px) {
+            .destination-card-link, .destination-card-link { flex-basis: 100%; max-width: 100%; }
+        }
+        /* New interactive elements styles */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+        }
+        
+        .floating-element {
+            position: absolute;
+            font-size: 2.5rem;
+            color: rgba(255, 255, 255, 0.3);
+            pointer-events: auto;
+            cursor: pointer;
+            transition: transform 5s ease-in-out, color 0.3s ease;
+        }
+        
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+            z-index: -1;
+            animation: gradientBG 15s ease infinite;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Logo to text animation */
+        .logo-container {
+            position: relative;
+        }
+        
+        .text-particle {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            animation: particleMove 1.5s forwards;
+        }
+        
+        @keyframes particleMove {
+            0% {
+                opacity: 0.8;
+                transform: translate(0, 0) scale(0.1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0.5);
+            }
+        }
+        
+        .heading-reveal {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .heading-reveal h1 {
+            transform: translateY(100%);
+            opacity: 0;
+            animation: revealHeading 1s forwards;
+            animation-delay: 1s;
+        }
+        
+        @keyframes revealHeading {
+            0% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .section-header h2 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .journey-icons {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin: 2rem 0;
+        }
+        
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+        }
+        
+        .icon-item i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .icon-item:hover i {
+            transform: translateY(-10px);
+        }
+        
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-image: url('images/main 2nd.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 1;
+            z-index: -1;
+            background-attachment: fixed;
+        }
+
+        nav {
+    position: fixed;
+    top: 25px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+    width: 100%;
+    background: transparent;
+}
+
+.nav-container {
+    background-color: rgb(80 80 80 / 0%);
+    width: 80%;
+    max-width: 1200px;
+    border-radius: 15px;
+    padding: 14px 30px;
+    display: flex
+;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(8px);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin-right: 24px;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transform: scale(1);
+    transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.nav-links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 0, 0.1);
+    border-radius: 8px;
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3),
+                0 0 25px rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.nav-links a:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.nav-links a.active {
+    color: #333;
+    box-shadow: 0 0 15px rgba(255, 255, 0, 0.2);
+}
+
+/* Responsive Navigation */
+@media (max-width: 768px) {
+    .nav-links {
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 0 10px;
+    }
+
+    .nav-links a {
+        padding: 10px 15px;
+        min-width: 100px;
+        font-size: 1rem;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+    }
+}
+
+
+        /* Enhanced Welcome Section Styles */
+        .welcome-section {
+            padding: 4rem 0;
+            background-color: #f8f8f8;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ffd700, #ff8c00);
+        }
+        
+        .welcome-section .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+        
+        .welcome-content {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #eaeaea;
+            position: relative;
+        }
+        
+        .welcome-title {
+            font-size: 2.4rem;
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .welcome-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #ff8c00);
+            border-radius: 2px;
+        }
+        
+        .welcome-message {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #444;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+        
+        .welcome-message p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        
+        .welcome-message em {
+            font-style: italic;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .welcome-message .signature {
+            text-align: right;
+            font-weight: 600;
+            margin-top: 2rem;
+            font-style: italic;
+            color: #333;
+            padding-right: 2rem;
+            position: relative;
+        }
+        
+        .welcome-message .signature::after {
+            content: "✍️";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        @media (max-width: 768px) {
+            .welcome-content {
+                padding: 2rem;
+            }
+            
+            .welcome-title {
+                font-size: 2rem;
+            }
+            
+            .welcome-message {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+        }
+
+        /* Remove top margin for hero section */
+        .hero {
+            padding-top: 90px; /* offset for fixed nav */
+            margin-top: 0 !important;
+        }
+
+        /* Add this to ensure L2 logo is fixed and not animated */
+        #l2-fixed-logo {
+    position: fixed;
+    top: 45px;
+    left: 25px;
+    z-index: 2000;
+    /* No animation or transition */
+    /* No transform or JS effect */
+}
+    </style>
+</head>
+<body>
+
+  <!-- L2 logo at far left, outside navigation bar -->
+  <div id="l2-fixed-logo">
+      <img src="images/l2.png" alt="L2 Logo" style="height:83px; width:auto;">
+  </div>
+
+  <!-- Navigation -->
+  <nav>
+      <div class="nav-container">
+          <div class="nav-links">
+              <a href="index.html">Home</a>
+              <a href="notice.html">Notice</a>
+              <a href="events.html">Events</a>
+              <a href="magazine.html">Magazine</a>
+              <a href="adopted-villages.html">Adopted Villages</a>
+              <a href="volunteers.html">Volunteers</a>
+              <a href="alumni.html">Alumni</a>
+              <a href="collaborator.html">Collaborator</a>
+              <a href="undp-goals.html">UNDP Goals</a>
+              <a href="about.html">About Us</a>
+          </div>
+      </div>
+  </nav>
+
+  <!-- Hero Section: add padding-top to offset nav height -->
+  <header class="hero" id="home" style="padding-top:70px; background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/nsut-banner.png') center/cover no-repeat;">
+        <div class="animated-bg"></div>
+
+        <div class="hero-content">
+            <!-- Text content removed -->
+        </div>
+    </header>
+
+   
+    <!-- Notices Section -->
+    <section class="notices-section">
+      <div class="section-header animate__animated" data-animate="animate__fadeInUp">
+        <h2>Recent Notices</h2>
+        <p><i>Stay updated with our latest announcements</i></p>
+      </div>
+
+      <div class="marquee-wrapper">
+        <div class="marquee">
+          🚨 NSS NSUT Orientation 2025 on 10th June &nbsp;&nbsp;&nbsp;
+          📌 Blood Donation Camp on 15th June &nbsp;&nbsp;&nbsp;
+          📝 Registration deadline extended to 12th June &nbsp;&nbsp;&nbsp;
+          📣 Join our volunteer WhatsApp group!
+        </div>
+      </div>
+
+      <div class="notice-button-wrapper">
+        <a href="#all-notices" class="read-all-btn">Read All Notices</a>
+      </div>
+    </section>
+    
+      <!-- Welcome Message Section -->
+    <section class="welcome-section">
+      <div class="container">
+        <div class="welcome-content animate__animated" data-animate="animate__fadeIn">
+          <h2 class="welcome-title">Welcome to NSS NSUT</h2>
+          <div class="welcome-message">
+            <p>Dear NSS Family and Friends,</p>
+            <p>We are thrilled to welcome you to the official website of the National Service Scheme (NSS) at Netaji Subhas University of Technology. Our mission is to empower students through meaningful community service, fostering a spirit of social responsibility and leadership. At NSS, we live by the motto <em>Not Me, But You</em>, believing in the power of volunteerism to create positive change in society. Whether you're a current volunteer, a prospective member, or simply someone interested in learning more about our initiatives, we invite you to explore our site and discover numerous opportunities for involvement. Join us in our journey of service, growth, and excellence as we strive to make a difference in our community and beyond. Together, let's cultivate compassion, drive change, and inspire one another to reach greater heights. Thank you for visiting, and we look forward to your active participation in our programs!</p>
+            <p class="signature">Warm regards</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- Important Messages -->
+<section id="important-messages" class="services">
+    <div class="section-header animate__animated" data-animate="animate__fadeInUp" style="margin-top: 60px;">
+        <h2>Important Messages</h2>
+    </div>
+    <div class="services-grid" style="display: flex; flex-wrap: nowrap; gap: 20px; overflow-x: auto;">
+        <div class="team-card" style="flex: 0 0 25%;">
+            <div class="team-image-container">
+                <img src="images/1.jpeg" alt="Vice Chancellor" class="team-image">
+            </div>
+            <div class="team-info">
+                <h3>Prof. Anand Srivastava</h3>
+                <p>Vice Chancellor</p>
+            </div>
+            <div class="expanded-content">
+                <p>It is with great pride that I greet all members and supporters of the National Service Scheme (NSS) at Netaji Subhas University of Technology. NSS plays a vital role in shaping our students' character by fostering social responsibility and community service. NSS volunteers exemplify compassion, leadership, and selflessness through their dedication to various social initiatives. Their efforts inspire us and create a positive impact on society. I encourage every student to actively engage in NSS programs. Through service, you will not only make a difference but also develop valuable skills and lasting friendships. Thank you for your commitment to NSS. Your efforts help make our university a true beacon of change.</p>
+            </div>
+        </div>
+
+        <div class="team-card" style="flex: 0 0 25%;">
+            <div class="team-image-container">
+                <img src="images/2.png" alt="Program Coordinator" class="team-image">
+            </div>
+            <div class="team-info">
+                <h3>Dr. Praveen Saroha</h3>
+                <p>Program Coordinator</p>
+            </div>
+            <div class="expanded-content">
+                <p>Welcome to the NSS NSUT Cell! It is an honor to serve as your Program Coordinator and work with such passionate individuals dedicated to making a positive impact. NSS is more than a program; it's a movement empowering students to tackle real-world challenges. Through initiatives in areas like environmental conservation and education, we foster service, leadership, and teamwork. Each project is an opportunity to grow and contribute to our community. I encourage you to embrace these experiences and bring your unique talents to our efforts. Thank you for your commitment to NSS. I look forward to the great work we'll accomplish together.</p>
+            </div>
+        </div>
+
+        <div class="team-card" style="flex: 0 0 25%;">
+            <div class="team-image-container">
+                <img src="images/3.jpg" alt="Founding President" class="team-image">
+            </div>
+            <div class="team-info">
+                <h3>Mr. Anuj</h3>
+                <p>Founding President</p>
+            </div>
+            <div class="expanded-content">
+                <p>As the Founding President of NSS NSUT Cell, I am filled with pride witnessing the remarkable journey we've shared. From our beginnings to becoming a community driven by service, our growth reflects the passion of every member. NSS is more than an organization—it's a way of life that inspires us to give back. Our projects in areas like environmental sustainability and social outreach embody our commitment to making a difference. Embrace the spirit of service. It's not just a duty but an opportunity to lead, empathize, and create change. Together, we can continue to amplify our impact and carry forward the NSS legacy. Thank you for your dedication. Let's keep achieving great things!</p>
+            </div>
+        </div>
+
+        <div class="team-card" style="flex: 0 0 25%;">
+            <div class="team-image-container">
+                <img src="images/4.jpeg" alt="President" class="team-image">
+            </div>
+            <div class="team-info">
+                <h3>Shubham Kumar</h3>
+                <p>President</p>
+            </div>
+            <div class="expanded-content">
+                <p>It's an honor to serve as the President of the NSS NSUT Cell and to witness the dedication and enthusiasm of our volunteers . Each initiative we undertake whether a cleanliness drive or an awareness campaign shows our commitment to social responsibility. I encourage everyone to get involved, as these experiences help us grow in leadership and empathy. Together, we can make a meaningful impact with your dedication. Let's continue to strive for excellence as epitome of change for the society!</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Recent Events -->
+<section id="recent-events" style="padding: 60px 0;">
+  <div class="section-header animate__animated" data-animate="animate__fadeInUp">
+    <h2 style="font-size: 2.2rem; text-align: center; margin-bottom: 40px;">Recent Events</h2>
+  </div>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; max-width: 1200px; margin: auto;">
+
+    <!-- Card Template -->
+    <div class="event-card" data-title="World Environment Day">
+      <div class="carousel">
+        <img src="images/world-environment-day/cover.png" alt="World Environment Day">
+        <button class="prev" onclick="changeImage(this, -1)">←</button>
+        <button class="next" onclick="changeImage(this, 1)">→</button>
+      </div>
+      <h3>World Environment Day</h3>
+    </div>
+
+    <div class="event-card" data-title="Fake News">
+      <div class="carousel">
+        <img src="images/fake news/cover.jpg" alt="Fake News">
+        <button class="prev" onclick="changeImage(this, -1)">←</button>
+        <button class="next" onclick="changeImage(this, 1)">→</button>
+      </div>
+      <h3>Fake News</h3>
+    </div>
+
+    <div class="event-card" data-title="Mock Drill Session">
+      <div class="carousel">
+        <img src="images/mock-drill-session/cover.png" alt="Mock Drill Session">
+        <button class="prev" onclick="changeImage(this, -1)">←</button>
+        <button class="next" onclick="changeImage(this, 1)">→</button>
+      </div>
+      <h3>Mock Drill Session</h3>
+    </div>
+
+    <div class="event-card" data-title="Water Treatment Session">
+      <div class="carousel">
+        <img src="images/water treatment session/cover.jpg" alt="Water Treatment Session">
+        <button class="prev" onclick="changeImage(this, -1)">←</button>
+        <button class="next" onclick="changeImage(this, 1)">→</button>
+      </div>
+      <h3>Water Treatment Session</h3>
+    </div>
+
+    <div class="event-card" data-title="Plantation 14-August">
+      <div class="carousel">
+        <img src="images/plantation 14-august/cover.png" alt="Plantation 14-August">
+        <button class="prev" onclick="changeImage(this, -1)">←</button>
+        <button class="next" onclick="changeImage(this, 1)">→</button>
+      </div>
+      <h3>Plantation Drive</h3>
+    </div>
+
+    <div class="event-card" data-title="Cramp Simulator">
+      <div class="carousel">
+        <img src="images/cramp simulator/cover.png" alt="Cramp Simulator">
+        <button class="prev" onclick="changeImage(this, -1)">←</button>
+        <button class="next" onclick="changeImage(this, 1)">→</button>
+      </div>
+      <h3>Cramp Simulator</h3>
+    </div>
+
+  </div>
+
+  <div style="text-align: center; margin-top: 50px;">
+    <a href="#" class="btn" style="background-color: #007BFF; color: white; padding: 12px 25px; font-size: 1rem; border-radius: 8px; text-decoration: none;">View All Events</a>
+  </div>
+</section>
+
+<style>
+    .event-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+  .event-card {
+    width: calc(33.33% - 20px);
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .event-card h3 {
+    margin: 15px 0;
+    font-size: 1.2rem;
+  }
+
+  .carousel {
+  position: relative;
+  height: 390px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f4f4;
+}
+
+.carousel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fully fills the tile without stretching */
+}
+
+  .carousel button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.4);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  .carousel .prev {
+    left: 10px;
+  }
+
+  .carousel .next {
+    right: 10px;
+  }
+
+  @media (max-width: 992px) {
+    .event-card {
+      width: calc(50% - 20px);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .event-card {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  const imageSources = {
+    'World Environment Day': ['images/world-environment-day/cover.png', 'images/world-environment-day/1.jpeg', 'images/world-environment-day/2.jpeg', 'images/world-environment-day/3.jpeg', 'images/world-environment-day/4.jpeg', 'images/world-environment-day/5.jpeg'],
+    'Fake News': ['images/fake news/cover.jpg', 'images/fake news/1.jpg', 'images/fake news/2.jpg', 'images/fake news/3.jpg', 'images/fake news/4.jpg'],
+    'Mock Drill Session': ['images/mock-drill-session/cover.png', 'images/mock-drill-session/1.jpeg', 'images/mock-drill-session/2.jpeg', 'images/mock-drill-session/3.jpeg', 'images/mock-drill-session/4.jpeg', 'images/mock-drill-session/5.jpeg'],
+    'Water Treatment Session': ['images/water treatment session/cover.jpg', 'images/water treatment session/1.jpg', 'images/water treatment session/2.jpg', 'images/water treatment session/3.jpg', 'images/water treatment session/4.jpg'],
+    'Plantation 14-August': ['images/plantation 14-august/cover.png', 'images/plantation 14-august/1.png', 'images/plantation 14-august/2.png','images/plantation 14-august/3.png'],
+    'Cramp Simulator': ['images/cramp simulator/cover.png', 'images/cramp simulator/1.jpg', 'images/cramp simulator/2.jpg']
+  };
+
+  const imageIndexes = {};
+  document.querySelectorAll('.event-card').forEach(card => {
+    const title = card.getAttribute('data-title');
+    imageIndexes[title] = 0;
+  });
+
+  function changeImage(button, direction) {
+    const card = button.closest('.event-card');
+    const title = card.getAttribute('data-title');
+    const images = imageSources[title];
+    let index = imageIndexes[title];
+    index = (index + direction + images.length) % images.length;
+    imageIndexes[title] = index;
+    const imgElement = card.querySelector('img');
+    imgElement.src = images[index];
+  }
+</script>
+
+
+<!-- Footer -->
+<div id="footer-placeholder"></div>
+
+<script>
+        // Load the footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+            
+        // Copy functionality
+        document.querySelectorAll('.copy-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const text = this.getAttribute('data-text');
+                navigator.clipboard.writeText(text).then(() => {
+                    this.classList.add('success');
+                    setTimeout(() => this.classList.remove('success'), 1000);
+                });
+            });
+        });
+
+        const carousel = document.getElementById('destinationCarousel');
+        const prevBtn = document.getElementById('carouselPrev');
+        const nextBtn = document.getElementById('carouselNext');
+        const cardLinks = document.querySelectorAll('.destination-card-link');
+        let currentIndex = 0;
+        
+        function getCardsPerView() {
+            if(window.innerWidth <= 600) return 1;
+            if(window.innerWidth <= 900) return 2;
+            return 3;
+        }
+        
+        function updateCarousel() {
+            const cardsPerView = getCardsPerView();
+            const cardWidth = cardLinks[0].offsetWidth;
+            const maxIndex = cardLinks.length - cardsPerView;
+            if(currentIndex < 0) currentIndex = 0;
+            if(currentIndex > maxIndex) currentIndex = maxIndex;
+            carousel.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === maxIndex;
+        }
+        
+        prevBtn.addEventListener('click', () => {
+            currentIndex--;
+            updateCarousel();
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            currentIndex++;
+            updateCarousel();
+        });
+        
+        // Animate elements when they come into view
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.animate__animated');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        const animationClass = element.getAttribute('data-animate');
+                        const delay = element.getAttribute('data-delay');
+                        
+                        if (delay) {
+                            element.style.animationDelay = delay;
+                        }
+                        
+                        if (animationClass) {
+                            element.classList.add(animationClass);
+                        }
+                        
+                        observer.unobserve(element);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        };
+        
+        // Parallax effect for background
+        const parallaxEffect = () => {
+            const parallaxBg = document.querySelector('.parallax-bg');
+            if (parallaxBg) {
+                window.addEventListener('scroll', () => {
+                    const scrollPosition = window.pageYOffset;
+                    parallaxBg.style.transform = `translateY(${scrollPosition * 0.4}px)`;
+                });
+            }
+        };
+        
+        // Floating elements animation
+        const initFloatingElements = () => {
+            const floatingElements = document.querySelectorAll('.floating-element');
+            
+            floatingElements.forEach(element => {
+                // Random initial position within constraints
+                const randomX = Math.random() * 10 - 5; // -5 to 5
+                const randomY = Math.random() * 10 - 5; // -5 to 5
+                
+                // Set initial position
+                element.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                
+                // Add hover effect
+                element.addEventListener('mouseenter', function() {
+                    this.style.color = 'rgba(255, 69, 0, 0.8)';
+                    this.style.transform = 'scale(1.2)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+                
+                element.addEventListener('mouseleave', function() {
+                    this.style.color = 'rgba(255, 255, 255, 0.3)';
+                    this.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                });
+                
+                // Create floating animation
+                setInterval(() => {
+                    const newX = Math.random() * 20 - 10; // -10 to 10
+                    const newY = Math.random() * 20 - 10; // -10 to 10
+                    element.style.transform = `translate(${newX}px, ${newY}px)`;
+                    element.style.transition = 'transform 5s ease-in-out';
+                }, 5000);
+            });
+        };
+        
+        // Smooth scrolling for navigation links
+        const initSmoothScrolling = () => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        };
+        
+        // Logo to text animation
+        const initLogoAnimation = () => {
+            const logo = document.getElementById('logoSvg');
+            const heading = document.getElementById('mainHeading');
+            
+            if (!logo || !heading) return;
+            
+            // Get positions
+            setTimeout(() => {
+                const logoRect = logo.getBoundingClientRect();
+                const headingRect = heading.getBoundingClientRect();
+                
+                // Create container for particles
+                const particlesContainer = document.createElement('div');
+                particlesContainer.className = 'particles-container';
+                particlesContainer.style.position = 'fixed';
+                particlesContainer.style.top = '0';
+                particlesContainer.style.left = '0';
+                particlesContainer.style.width = '100%';
+                particlesContainer.style.height = '100%';
+                particlesContainer.style.pointerEvents = 'none';
+                particlesContainer.style.zIndex = '999';
+                document.body.appendChild(particlesContainer);
+                
+                // Create particles
+                const particleCount = 30;
+                const logoX = logoRect.left + logoRect.width / 2;
+                const logoY = logoRect.top + logoRect.height / 2;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'text-particle';
+                    
+                    // Random size between 3px and 8px
+                    const size = 3 + Math.random() * 5;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Position at logo center
+                    particle.style.left = `${logoX}px`;
+                    particle.style.top = `${logoY}px`;
+                    
+                    // Calculate destination (heading area)
+                    const tx = headingRect.left + Math.random() * headingRect.width - logoX;
+                    const ty = headingRect.top + Math.random() * headingRect.height - logoY;
+                    
+                    // Set animation variables
+                    particle.style.setProperty('--tx', `${tx}px`);
+                    particle.style.setProperty('--ty', `${ty}px`);
+                    
+                    // Add delay
+                    particle.style.animationDelay = `${Math.random() * 0.5}s`;
+                    
+                    // Add to container
+                    particlesContainer.appendChild(particle);
+                }
+                
+                // Clean up particles after animation
+                setTimeout(() => {
+                    particlesContainer.remove();
+                }, 2500);
+                
+                // Add a glow effect to the logo during animation
+                logo.style.filter = 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.8))';
+                logo.style.transition = 'filter 2s ease';
+                
+                // Remove glow after animation
+                setTimeout(() => {
+                    logo.style.filter = 'none';
+                }, 2000);
+                
+            }, 500);
+        };
+        
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCarousel();
+            animateOnScroll();
+            parallaxEffect();
+            initFloatingElements();
+            initSmoothScrolling();
+            initLogoAnimation();
+        });
+        
+        window.addEventListener('resize', updateCarousel);
+    </script>
+</body>
+</html>
