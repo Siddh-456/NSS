@@ -370,7 +370,7 @@
         }
 
         nav {
-            position: fixed;
+            position: relative;
             top: 0;
             left: 0;
             right: 0;
@@ -382,10 +382,7 @@
             width: 100%;
             background: transparent;
             transition: transform 0.3s ease;
-        }
-
-        nav.hide {
-            transform: translateY(-100%);
+            margin-top: 0 !important;
         }
 
         .nav-container {
@@ -946,8 +943,8 @@
         }
 
         nav {
-    position: fixed;
-    top: 25px;
+    position: relative;
+    top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
@@ -957,6 +954,8 @@
     padding: 0;
     width: 100%;
     background: transparent;
+    transition: transform 0.3s ease;
+    margin-top: 0 !important;
 }
 
 .nav-container {
@@ -1180,32 +1179,74 @@
     /* No animation or transition */
     /* No transform or JS effect */
 }
+.logo-row {
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0;
+  padding: 12px 2vw 12px 2vw;
+  border-bottom: 1px solid #eee;
+  box-sizing: border-box;
+}
+.logo-row img {
+  height: 65px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  flex: 1 1 0;
+  max-width: 120px;
+}
+@media (max-width: 900px) {
+  .logo-row {
+    padding: 10px 2vw;
+  }
+  .logo-row img {
+    height: 40px;
+    max-width: 70px;
+  }
+}
+@media (max-width: 600px) {
+  .logo-row {
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 1vw;
+  }
+  .logo-row img {
+    height: 28px;
+    max-width: 40px;
+  }
+}
     </style>
 </head>
 <body>
-
-  <!-- L2 logo at far left, outside navigation bar -->
-  <div id="l2-fixed-logo">
-      <img src="images/l2.png" alt="L2 Logo" style="height:83px; width:auto;">
+  <!-- Logo Row -->
+  <div class="logo-row">
+    <img src="images/l1.png" alt="L1 Logo">
+    <img src="images/l2.png" alt="L2 Logo">
+    <img src="images/l3.png" alt="L3 Logo">
+    <img src="images/l4.png" alt="L4 Logo">
+    <img src="images/l5.png" alt="L5 Logo">
+    <img src="images/l6.png" alt="L6 Logo">
   </div>
-
   <!-- Navigation -->
-  <nav>
-      <div class="nav-container">
-          <div class="nav-links">
-              <a href="index.html">Home</a>
-              <a href="notice.html">Notice</a>
-              <a href="events.html">Events</a>
-              <a href="magazine.html">Magazine</a>
-              <a href="adopted-villages.html">Adopted Villages</a>
-              <a href="volunteers.html">Volunteers</a>
-              <a href="alumni.html">Alumni</a>
-              <a href="collaborator.html">Collaborator</a>
-              <a href="undp-goals.html">UNDP Goals</a>
-              <a href="about.html">About Us</a>
-          </div>
-      </div>
-  </nav>
+  <div id="nav-placeholder"></div>
+  <script>
+    fetch('navi.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('nav-placeholder').innerHTML = data;
+        // Ensure nav is not overlapping logo row
+        var nav = document.querySelector('#nav-placeholder nav');
+        if(nav) {
+          nav.style.position = 'relative';
+          nav.style.top = '0';
+          nav.style.marginTop = '0';
+        }
+      })
+      .catch(error => console.error('Error loading navigation:', error));
+  </script>
 
   <!-- Hero Section: add padding-top to offset nav height -->
   <header class="hero" id="home" style="padding-top:70px; background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/nsut-banner.png') center/cover no-repeat;">
@@ -1257,56 +1298,57 @@
     <div class="section-header animate__animated" data-animate="animate__fadeInUp" style="margin-top: 60px;">
         <h2>Important Messages</h2>
     </div>
-    <div class="services-grid" style="display: flex; flex-wrap: nowrap; gap: 20px; overflow-x: auto;">
-        <div class="team-card" style="flex: 0 0 25%;">
-            <div class="team-image-container">
-                <img src="images/1.jpeg" alt="Vice Chancellor" class="team-image">
+    <div class="services-grid" style="display: flex; flex-direction: column; gap: 20px;">
+        <!-- Card 1 -->
+        <div class="team-card important-message-card" style="width: 100%; display: flex; align-items: flex-start;">
+            <div class="team-image-container" style="flex: 0 0 160px; height: 160px; padding: 0; margin-right: 32px;">
+                <img src="images/1.jpeg" alt="Vice Chancellor" class="team-image" style="width: 160px; height: 160px; border-radius: 10px; object-fit: cover;">
             </div>
-            <div class="team-info">
+            <div class="team-info" style="flex: 1; text-align: left; padding: 0;">
                 <h3>Prof. Anand Srivastava</h3>
-                <p>Vice Chancellor</p>
-            </div>
-            <div class="expanded-content">
-                <p>It is with great pride that I greet all members and supporters of the National Service Scheme (NSS) at Netaji Subhas University of Technology. NSS plays a vital role in shaping our students' character by fostering social responsibility and community service. NSS volunteers exemplify compassion, leadership, and selflessness through their dedication to various social initiatives. Their efforts inspire us and create a positive impact on society. I encourage every student to actively engage in NSS programs. Through service, you will not only make a difference but also develop valuable skills and lasting friendships. Thank you for your commitment to NSS. Your efforts help make our university a true beacon of change.</p>
+                <p style="font-weight: 600; color: #555;">Vice Chancellor</p>
+                <div class="important-message-text">
+                    <p>It is with great pride that I greet all members and supporters of the National Service Scheme (NSS) at Netaji Subhas University of Technology. NSS plays a vital role in shaping our students' character by fostering social responsibility and community service. NSS volunteers exemplify compassion, leadership, and selflessness through their dedication to various social initiatives. Their efforts inspire us and create a positive impact on society. I encourage every student to actively engage in NSS programs. Through service, you will not only make a difference but also develop valuable skills and lasting friendships. Thank you for your commitment to NSS. Your efforts help make our university a true beacon of change.</p>
+                </div>
             </div>
         </div>
-
-        <div class="team-card" style="flex: 0 0 25%;">
-            <div class="team-image-container">
-                <img src="images/2.png" alt="Program Coordinator" class="team-image">
+        <!-- Card 2 -->
+        <div class="team-card important-message-card" style="width: 100%; display: flex; align-items: flex-start;">
+            <div class="team-image-container" style="flex: 0 0 160px; height: 160px; padding: 0; margin-right: 32px;">
+                <img src="images/2.png" alt="Program Coordinator" class="team-image" style="width: 160px; height: 160px; border-radius: 10px; object-fit: cover;">
             </div>
-            <div class="team-info">
+            <div class="team-info" style="flex: 1; text-align: left; padding: 0;">
                 <h3>Dr. Praveen Saroha</h3>
-                <p>Program Coordinator</p>
-            </div>
-            <div class="expanded-content">
-                <p>Welcome to the NSS NSUT Cell! It is an honor to serve as your Program Coordinator and work with such passionate individuals dedicated to making a positive impact. NSS is more than a program; it's a movement empowering students to tackle real-world challenges. Through initiatives in areas like environmental conservation and education, we foster service, leadership, and teamwork. Each project is an opportunity to grow and contribute to our community. I encourage you to embrace these experiences and bring your unique talents to our efforts. Thank you for your commitment to NSS. I look forward to the great work we'll accomplish together.</p>
+                <p style="font-weight: 600; color: #555;">Program Coordinator</p>
+                <div class="important-message-text">
+                    <p>Welcome to the NSS NSUT Cell! It is an honor to serve as your Program Coordinator and work with such passionate individuals dedicated to making a positive impact. NSS is more than a program; it's a movement empowering students to tackle real-world challenges. Through initiatives in areas like environmental conservation and education, we foster service, leadership, and teamwork. Each project is an opportunity to grow and contribute to our community. I encourage you to embrace these experiences and bring your unique talents to our efforts. Thank you for your commitment to NSS. I look forward to the great work we'll accomplish together.</p>
+                </div>
             </div>
         </div>
-
-        <div class="team-card" style="flex: 0 0 25%;">
-            <div class="team-image-container">
-                <img src="images/3.jpg" alt="Founding President" class="team-image">
+        <!-- Card 3 -->
+        <div class="team-card important-message-card" style="width: 100%; display: flex; align-items: flex-start;">
+            <div class="team-image-container" style="flex: 0 0 160px; height: 160px; padding: 0; margin-right: 32px;">
+                <img src="images/3.jpg" alt="Founding President" class="team-image" style="width: 160px; height: 160px; border-radius: 10px; object-fit: cover;">
             </div>
-            <div class="team-info">
+            <div class="team-info" style="flex: 1; text-align: left; padding: 0;">
                 <h3>Mr. Anuj</h3>
-                <p>Founding President</p>
-            </div>
-            <div class="expanded-content">
-                <p>As the Founding President of NSS NSUT Cell, I am filled with pride witnessing the remarkable journey we've shared. From our beginnings to becoming a community driven by service, our growth reflects the passion of every member. NSS is more than an organization—it's a way of life that inspires us to give back. Our projects in areas like environmental sustainability and social outreach embody our commitment to making a difference. Embrace the spirit of service. It's not just a duty but an opportunity to lead, empathize, and create change. Together, we can continue to amplify our impact and carry forward the NSS legacy. Thank you for your dedication. Let's keep achieving great things!</p>
+                <p style="font-weight: 600; color: #555;">Founding President</p>
+                <div class="important-message-text">
+                    <p>As the Founding President of NSS NSUT Cell, I am filled with pride witnessing the remarkable journey we've shared. From our beginnings to becoming a community driven by service, our growth reflects the passion of every member. NSS is more than an organization—it's a way of life that inspires us to give back. Our projects in areas like environmental sustainability and social outreach embody our commitment to making a difference. Embrace the spirit of service. It's not just a duty but an opportunity to lead, empathize, and create change. Together, we can continue to amplify our impact and carry forward the NSS legacy. Thank you for your dedication. Let's keep achieving great things!</p>
+                </div>
             </div>
         </div>
-
-        <div class="team-card" style="flex: 0 0 25%;">
-            <div class="team-image-container">
-                <img src="images/4.jpeg" alt="President" class="team-image">
+        <!-- Card 4 -->
+        <div class="team-card important-message-card" style="width: 100%; display: flex; align-items: flex-start;">
+            <div class="team-image-container" style="flex: 0 0 160px; height: 160px; padding: 0; margin-right: 32px;">
+                <img src="images/4.jpeg" alt="President" class="team-image" style="width: 160px; height: 160px; border-radius: 10px; object-fit: cover;">
             </div>
-            <div class="team-info">
+            <div class="team-info" style="flex: 1; text-align: left; padding: 0;">
                 <h3>Shubham Kumar</h3>
-                <p>President</p>
-            </div>
-            <div class="expanded-content">
-                <p>It's an honor to serve as the President of the NSS NSUT Cell and to witness the dedication and enthusiasm of our volunteers . Each initiative we undertake whether a cleanliness drive or an awareness campaign shows our commitment to social responsibility. I encourage everyone to get involved, as these experiences help us grow in leadership and empathy. Together, we can make a meaningful impact with your dedication. Let's continue to strive for excellence as epitome of change for the society!</p>
+                <p style="font-weight: 600; color: #555;">President</p>
+                <div class="important-message-text">
+                    <p>It's an honor to serve as the President of the NSS NSUT Cell and to witness the dedication and enthusiasm of our volunteers . Each initiative we undertake whether a cleanliness drive or an awareness campaign shows our commitment to social responsibility. I encourage everyone to get involved, as these experiences help us grow in leadership and empathy. Together, we can make a meaningful impact with your dedication. Let's continue to strive for excellence as epitome of change for the society!</p>
+                </div>
             </div>
         </div>
     </div>
